@@ -62,3 +62,22 @@ aws_inspector_container_image_severity_count{digest="sha256:81de8eb8dfcb38c28d6c
 aws_inspector_container_image_severity_count{digest="sha256:81de8eb8dfcb38c28d6ca0a8e4c9ad27bedc72e523f96d93c7cc365e62be5147",image="112233445566.dkr.ecr.eu-west-1.amazonaws.com/monkeytail:2b4692ee",name="monkeytail",registry_id="112233445566",severity="LOW",tag="2b4692ee"} 4.0
 ....
 ```
+
+## Required IAM Permissions
+Currently, the required IAM permissions are: 
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "inspector2:ListFindingAggregations",
+        "sts:GetCallerIdentity"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+You can omit the `sts:GetCallerIdentity` permission if you supply your account ID with the `AWS_ACCOUNT_ID` environment variable.
