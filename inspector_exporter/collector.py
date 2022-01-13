@@ -65,22 +65,24 @@ class InspectorMetricsCollector:
 
         paginator = inspector_client.get_paginator("list_finding_aggregations")
 
-        image_iterator = paginator.paginate(
+        image_findings = paginator.paginate(
             accountIds=[
                 {
                     "comparison": "EQUALS",
                     "value": self.account_id,
                 }
             ],
+            aggregationRequest={
+                'awsEcrContainerAggregation': {
+                    'sortBy': 'ALL',
+                    'sortOrder': 'DESC'
+                }
+            },
             aggregationType="AWS_ECR_CONTAINER",
             PaginationConfig={"pageSize": 1000},
-        )
-
-        image_findings = [
-            image for x in list(image_iterator) for image in x["responses"]
-        ]
-
-        for image_finding in image_findings:
+        ).build_full_result()
+        
+        for image_finding in image_findings["responses"]:
             repositoryName = image_finding["awsEcrContainerAggregation"]["repository"]
 
             image_to_cache = {

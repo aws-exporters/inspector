@@ -18,7 +18,7 @@ dependencies = [
 
 setup(
     name="inspector_exporter",
-    version="0.0.1",
+    version="0.0.2",
     url="https://github.com/aws-exporters/inspector",
     license="MIT",
     author="Tim Birkett",
