@@ -73,15 +73,12 @@ class InspectorMetricsCollector:
                 }
             ],
             aggregationRequest={
-                'awsEcrContainerAggregation': {
-                    'sortBy': 'ALL',
-                    'sortOrder': 'DESC'
-                }
+                "awsEcrContainerAggregation": {"sortBy": "ALL", "sortOrder": "DESC"}
             },
             aggregationType="AWS_ECR_CONTAINER",
             PaginationConfig={"pageSize": 1000},
         ).build_full_result()
-        
+
         for image_finding in image_findings["responses"]:
             repositoryName = image_finding["awsEcrContainerAggregation"]["repository"]
 
